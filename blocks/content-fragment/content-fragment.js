@@ -18,8 +18,9 @@ export default function decorate(block) {
   slugID.id = 'slug';
   slugDiv.replaceWith(slugID);
   slugID.innerHTML = `${slugDiv.innerHTML}`;
-  const slugTemp = slugID.innerHTML.replace(/<div>|<\/div>/g, '');
-  const slug = slugTemp.match(/\S+/g);
+  //const slugTemp = slugID.innerHTML.replace(/<div>|<\/div>/g, '');
+  //const slug = slugTemp.match(/\S+/g);
+  const slug = slugID.textContent.trim();
   
   const quoteDiv = block.querySelector('div:last-of-type');
   const destinationDiv = document.createElement('div');
