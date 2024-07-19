@@ -8,7 +8,7 @@ function getMetadata(name) {
 
 //const aem = "http://localhost:4503";
 //const aem = "https://publish-p107058-e1001010.adobeaemcloud.com";
-const aem = "https://publish-p129757-e1266090.adobeaemcloud.com";
+const aem = "https://publish-p135360-e1341441.adobeaemcloud.com/";
 
 export default function decorate(block) {
 
@@ -22,38 +22,25 @@ export default function decorate(block) {
   const slug = slugTemp.match(/\S+/g);
   
   const quoteDiv = block.querySelector('div:last-of-type');
-  const adventureDiv = document.createElement('div');
-  adventureDiv.id = "adventure-" + slug; 
-  quoteDiv.replaceWith(adventureDiv);
-
-fetch(aem + '/graphql/execute.json/aem-demo-assets/adventures-by-slug;slug=' + slug)
+  const destinationDiv = document.createElement('div');
+  destinationDiv.id = "destination-" + slug; 
+  quoteDiv.replaceWith(destinationDiv);
+  
+fetch(aem + '/graphql/execute.json/qatar-airways/destination-by-slug;slug=' + slug)
 .then(response => response.json())
 .then(response => {
 
-const backgroundImage = response.data.adventureList.items[0].primaryImage._publishUrl;
-document.getElementById(adventureDiv.id).innerHTML = "<section><img src=" + backgroundImage + "></section>";  
+const backgroundImage = response.data.travelDestinationList.items[0].primaryImage._dynamicUrl;
+document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" + backgroundImage + "></section>";  
 
-const adventureTitle = response.data.adventureList.items[0].title;
-document.getElementById(adventureDiv.id).innerHTML += "<section><h3>"+ adventureTitle + "</h3></section>";
+const cityName = response.data.travelDestinationList.items[0].cityName;
+document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityName + "</h3></section>";
 
-const adventureDesc = response.data.adventureList.items[0].description.plaintext;
-document.getElementById(adventureDiv.id).innerHTML += "<section>" + adventureDesc + "</section>";
+const cityNickname = response.data.travelDestinationList.items[0].cityNickName;
+document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityNickName + "</h3></section>";
 
-const adventureType = response.data.adventureList.items[0].adventureType;
-document.getElementById(adventureDiv.id).innerHTML += "<section>" + "Adventure Type: " + adventureType + "</section>";
-
-const tripLength = response.data.adventureList.items[0].tripLength;
-document.getElementById(adventureDiv.id).innerHTML += "<section>" +"Trip Length: " + tripLength + "</section>";
-
-const tripDifficulty = response.data.adventureList.items[0].difficulty;
-document.getElementById(adventureDiv.id).innerHTML += "<section>" + "Difficulty: " + tripDifficulty + "</section>";
-
-const groupSize = response.data.adventureList.items[0].groupSize;
-document.getElementById(adventureDiv.id).innerHTML += "<section>" + "Group Size: " + groupSize + "</section>";
-
-const tripItinerary= response.data.adventureList.items[0].itinerary.html;
-document.getElementById(adventureDiv.id).innerHTML += "<section>" + "Itinerary: </br>" + tripItinerary + "</section>";
-
+const cityDescription = response.data.travelDestinationList.items[0].description.plaintext;
+document.getElementById(destinationDiv.id).innerHTML += "<section>" + cityDescription + "</section>";
 })
 .catch(error => {
   console.log('Error fetching data:', error);
