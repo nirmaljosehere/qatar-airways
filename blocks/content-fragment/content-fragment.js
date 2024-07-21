@@ -32,7 +32,8 @@ fetch(aem + '/graphql/execute.json/qatar-airways/destination-by-slug;slug=' + sl
 .then(response => {
 
 const backgroundImage = response.data.travelDestinationList.items[0].primaryImage._dynamicUrl;
-document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" + backgroundImage + "></section>";  
+const imgURl = aem + backgroundImage;
+document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" imgURl + "></section>";  
 
 const cityName = response.data.travelDestinationList.items[0].cityName;
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityName + "</h3></section>";
