@@ -38,7 +38,7 @@ document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" + im
 const cityName = response.data.travelDestinationList.items[0].cityName;
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityName + "</h3></section>";
 
-const cityNickname = response.data.travelDestinationList.items[0].cityNickName;
+const cityNickName = response.data.travelDestinationList.items[0].cityNickName;
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityNickName + "</h3></section>";
 
 const cityDescription = response.data.travelDestinationList.items[0].description.plaintext;
