@@ -18,9 +18,8 @@ export default function decorate(block) {
   slugID.id = 'slug';
   slugDiv.replaceWith(slugID);
   slugID.innerHTML = `${slugDiv.innerHTML}`;
-  //const slugTemp = slugID.innerHTML.replace(/<div>|<\/div>/g, '');
-  //const slug = slugTemp.match(/\S+/g);
-  const slug = slugID.textContent.trim();
+  const slugTemp = slugID.innerHTML.replace(/<div>|<\/div>/g, '');
+  const slug = slugTemp.match(/\S+/g);
   
   const quoteDiv = block.querySelector('div:last-of-type');
   const destinationDiv = document.createElement('div');
@@ -32,8 +31,8 @@ fetch(aem + '/graphql/execute.json/qatar-airways/destination-by-slug;slug=' + sl
 .then(response => {
 
 const backgroundImage = response.data.travelDestinationList.items[0].primaryImage._dynamicUrl;
-const imgURl = aem + backgroundImage;
-document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" imgURl + "></section>";  
+const imageURL = aem + backgroundImage;
+document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" + imageURL + "></section>";  
 
 const cityName = response.data.travelDestinationList.items[0].cityName;
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityName + "</h3></section>";
