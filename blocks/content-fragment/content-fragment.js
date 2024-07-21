@@ -27,7 +27,7 @@ export default function decorate(block) {
   destinationDiv.id = "destination-" + slug; 
   quoteDiv.replaceWith(destinationDiv);
   
-fetch(aem + '/graphql/execute.json/qatar-airways/destination-by-slug;slug=' + slug, { mode: 'no-cors'})
+fetch(aem + '/graphql/execute.json/qatar-airways/destination-by-slug;slug=' + slug)
 .then(response => response.json())
 .then(response => {
 
