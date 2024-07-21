@@ -41,7 +41,7 @@ document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityNam
 const cityNickName = response.data.travelDestinationList.items[0].cityNickName;
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityNickName + "</h3></section>";
 
-const cityDescription = response.data.travelDestinationList.items[0].description.plaintext;
+const cityDescription = response.data.travelDestinationList.items[0].cityDescription.plaintext;
 document.getElementById(destinationDiv.id).innerHTML += "<section>" + cityDescription + "</section>";
 })
 .catch(error => {
