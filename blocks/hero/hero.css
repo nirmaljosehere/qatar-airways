@@ -12,7 +12,14 @@ main .hero-container {
   min-height: 300px;
 }
 
-.hero h1,h2,h3,h4,h5,h6,p {
+.hero h1 {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
+.hero h2 {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
