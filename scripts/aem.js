@@ -324,6 +324,19 @@ function createOptimizedPicture(
   eager = false,
   breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
 ) {
+
+  const fallbackSrc = '/content/dam/qatar-airways/website/qatar-placeholder.jpg';
+  // Check if the image exists
+  fetch(src)
+    .then(response => {
+      if (!response.ok) {
+        // If the image doesn't exist, use the fallback image
+        console.log('Image not found, using fallback');
+        url.pathname = fallbackSrc;
+      }
+      // Continue with the rest of the function...
+    })
+
   const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
   const { pathname } = url;
