@@ -36,7 +36,7 @@ const imageURL = aem + backgroundImage;
 const cityName = response.data.travelDestinationList.items[0].cityName;
 const cityNickName = response.data.travelDestinationList.items[0].cityNickName;
 const cityDescription = response.data.travelDestinationList.items[0].cityDescription.plaintext;
-document.getElementById(destinationDiv.id).innerHTML = "<section><img src=" + imageURL + " alt="+ cityName + "></section>";  
+document.getElementById(destinationDiv.id).innerHTML = "<div class='destination-image'><img src=" + imageURL + " alt="+ cityName + "></div>";  
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityName + "</h3></section>";
 document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityNickName + "</h3></section>";
 document.getElementById(destinationDiv.id).innerHTML += "<section>" + cityDescription + "</section>";
