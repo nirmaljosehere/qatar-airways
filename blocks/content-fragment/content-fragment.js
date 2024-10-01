@@ -12,38 +12,35 @@ const aem = "https://publish-p135360-e1341441.adobeaemcloud.com/";
 
 export default function decorate(block) {
 
-
-  const slugDiv = block.querySelector('div:nth-child(1)'); 
   const slugID = document.createElement('div');
   slugID.id = 'slug';
-  slugDiv.replaceWith(slugID);
-  slugID.innerHTML = `${slugDiv.innerHTML}`;
-  //const slugTemp = slugID.innerHTML.replace(/<div>|<\/div>/g, '');
-  //const slug = slugTemp.match(/\S+/g);
-  const slug = slugID.textContent.trim();
-  
-  const quoteDiv = block.querySelector('div:last-of-type');
-  const destinationDiv = document.createElement('div');
-  destinationDiv.id = "destination-" + slug; 
-  quoteDiv.replaceWith(destinationDiv);
-  
-fetch(aem + '/graphql/execute.json/qatar-airways/destination-by-slug;slug=' + slug)
-.then(response => response.json())
-.then(response => {
+  slugID.textContent = block.querySelector('div:nth-child(1)').textContent.trim();
+  block.querySelector('div:nth-child(1)').replaceWith(slugID);
 
-const backgroundImage = response.data.travelDestinationList.items[0].primaryImage._dynamicUrl;
-const imageURL = aem + backgroundImage;
-const cityName = response.data.travelDestinationList.items[0].cityName;
-const cityNickName = response.data.travelDestinationList.items[0].cityNickName;
-const cityDescription = response.data.travelDestinationList.items[0].cityDescription.plaintext;
-document.getElementById(destinationDiv.id).innerHTML = "<div class='destination-image'><img src=" + imageURL + " alt="+ cityName + "></div>";  
-document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityName + "</h3></section>";
-document.getElementById(destinationDiv.id).innerHTML += "<section><h3>"+ cityNickName + "</h3></section>";
-document.getElementById(destinationDiv.id).innerHTML += "<section>" + cityDescription + "</section>";
-})
-.catch(error => {
-  console.log('Error fetching data:', error);
-});
+  const destinationDiv = document.createElement('div');
+  destinationDiv.id = `destination-${slugID.textContent}`;
+  block.querySelector('div:last-of-type').replaceWith(destinationDiv);
+
+  fetch(`${aem}/graphql/execute.json/qatar-airways/destination-by-slug;slug=${slugID.textContent}`)
+    .then(response => response.json())
+    .then(response => {
+      const { primaryImage, cityName, cityNickName, cityDescription } = response.data.travelDestinationList.items[0];
+      const imageURL = `${aem}${primaryImage._dynamicUrl}`;
+
+      destinationDiv.innerHTML = `
+        <div class='destination-image'>
+          <img src="${imageURL}" alt="${cityName}">
+        </div>
+        <div class='destination-content'>
+          <div class='destination-content-title'><h3>${cityName}</h3></div>
+          <div class='destination-content-subtitle'><h4>${cityNickName}</h4></div>
+          <div class='destination-content-description'><p>${cityDescription.plaintext}</p></div>
+        </div>
+      `;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
 
 }
 
