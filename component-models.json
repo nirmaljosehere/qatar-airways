@@ -1,5 +1,41 @@
 [
   {
+    "id": "page-metadata",
+    "fields": [
+        {
+            "component": "text",
+            "name": "og:type",
+            "label": "OG Type"
+        },
+        {
+            "component": "text",
+            "name": "banner",
+            "label": "Banner"
+        },
+        {
+            "component": "select",
+            "name": "breadcrumbs",
+            "value": "",
+            "label": "Breadcrumbs",
+            "valueType": "string",
+            "options": [
+                {
+                    "name": "Use Default",
+                    "value": ""
+                },
+                {
+                    "name": "Hide",
+                    "value": "false"
+                },
+                {
+                    "name": "Show",
+                    "value": "true"
+                }
+            ]
+        }
+    ]
+  },
+  {
     "id": "title",
     "fields": [
       {
