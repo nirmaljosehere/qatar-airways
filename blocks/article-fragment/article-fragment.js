@@ -24,19 +24,41 @@ export default function decorate(block) {
   fetch(`${aem}/graphql/execute.json/qatar-airways/city-details-by-slug;slug=${slugID.textContent}`)
     .then(response => response.json())
     .then(response => {
-      const { primaryImage, cityName, cityNickName, cityDescription } = response.data.travelDestinationList.items[0];
-      const imageURL = `${aem}${primaryImage._dynamicUrl}`;
+      const { cityName, cityDescription, contentBlocks } = response.data.cityList.items[0];
 
-      cityDiv.innerHTML = `
-        <div class='destination-image'>
-          <img src="${imageURL}" alt="${cityName}">
-        </div>
-        <div class='destination-content'>
-          <div class='destination-content-title'><h3>${cityName}</h3></div>
-          <div class='destination-content-subtitle'><h4>${cityNickName}</h4></div>
-          <div class='destination-content-description'><p>${cityDescription.plaintext}</p></div>
-        </div>
+      // Create city overview block
+      const cityOverviewDiv = document.createElement('div');
+      cityOverviewDiv.className = 'city-block';
+      cityOverviewDiv.innerHTML = `
+        <div class='city-content-title'><h3>${cityName}</h3></div>
+        <div class='city-content-description'>${cityDescription.html}</div>
       `;
+      cityDiv.appendChild(cityOverviewDiv);
+
+      // Create content blocks
+      contentBlocks.forEach((block, index) => {
+        const blockDiv = document.createElement('div');
+        blockDiv.className = 'city-detail-block';
+        blockDiv.id = `city-detail-${index + 1}`;
+
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'city-detail-content';
+        contentDiv.innerHTML = `
+          <div class='city-detail-content-title'><h4>${block.title}</h4></div>
+          <div class='city-detail-content-description'>${block.description.html}</div>
+        `;
+
+        blockDiv.appendChild(contentDiv);
+
+        if (block.image) {
+          const imageDiv = document.createElement('div');
+          imageDiv.className = 'city-detail-image';
+          imageDiv.innerHTML = `<img src="${aem}${block.image._dynamicUrl}" alt="${block.title}">`;
+          blockDiv.appendChild(imageDiv);
+        }
+
+        cityDiv.appendChild(blockDiv);
+      });
     })
     .catch(error => {
       console.error('Error fetching data:', error);
