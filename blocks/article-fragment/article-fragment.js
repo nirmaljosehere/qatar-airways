@@ -17,17 +17,17 @@ export default function decorate(block) {
   slugID.textContent = block.querySelector('div:nth-child(1)').textContent.trim();
   block.querySelector('div:nth-child(1)').replaceWith(slugID);
 
-  const destinationDiv = document.createElement('div');
-  destinationDiv.id = `destination-${slugID.textContent}`;
-  block.querySelector('div:last-of-type').replaceWith(destinationDiv);
+  const cityDiv = document.createElement('div');
+  cityDiv.id = `city-${slugID.textContent}`;
+  block.querySelector('div:last-of-type').replaceWith(cityDiv);
 
-  fetch(`${aem}/graphql/execute.json/qatar-airways/destination-by-slug;slug=${slugID.textContent}`)
+  fetch(`${aem}/graphql/execute.json/qatar-airways/city-details-by-slug;slug=${slugID.textContent}`)
     .then(response => response.json())
     .then(response => {
       const { primaryImage, cityName, cityNickName, cityDescription } = response.data.travelDestinationList.items[0];
       const imageURL = `${aem}${primaryImage._dynamicUrl}`;
 
-      destinationDiv.innerHTML = `
+      cityDiv.innerHTML = `
         <div class='destination-image'>
           <img src="${imageURL}" alt="${cityName}">
         </div>
